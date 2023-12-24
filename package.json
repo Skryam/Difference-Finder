@@ -18,7 +18,8 @@
   "homepage": "https://github.com/Skryam/Project_2#readme",
   "type": "module",
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "lodash": "^4.17.21"
   },
   "bin": {
     "gendiff": "bin/gendiff.js"
