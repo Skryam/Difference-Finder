@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const fileParse = (filePath) => {
   if (path.extname(filePath) === '.json') {
-    const parsedFile = JSON.parse(readFileSync(filePath));
+    const parsedFile = JSON.parse(readFileSync(filePath, 'utf-8'));
     const keys = Object.keys(parsedFile);
     const sortedKeys = keys.sort();
     const sortedObject = {};
@@ -19,8 +19,8 @@ const getDifference = (file1, file2) => {
   let result = '';
   const parsedFile1 = fileParse(file1);
   const parsedFile2 = fileParse(file2);
-
   const entri = Object.entries(parsedFile1);
+
   entri.forEach(([key, value]) => {
     // В случае если одинаковые названия ключей
     if (Object.hasOwn(parsedFile2, key)) {
