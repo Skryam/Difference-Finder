@@ -23,5 +23,5 @@ jobs:
         
       - name: Save coverage report
         run: |
-          cp -r coverage/* ./coverage
+          cp -r coverage/*
         if: ${{ always() }}
