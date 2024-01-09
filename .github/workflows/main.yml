@@ -15,10 +15,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create coverage directory
+        run: mkdir -p ./coverage
+
       - name: Run tests
         run: npm run test
+        
       - name: Save coverage report
         run: |
-          mkdir -p coverage
-          cp -r coverage/ ./coverage
+          cp -r coverage/* ./coverage
         if: ${{ always() }}
