@@ -1,12 +1,17 @@
 import path from 'node:path';
-import { readFileSync } from 'node:fs';
 import { cwd } from 'node:process';
 import shouldBe from '../__fixtures__/expectedfile.js'
-import getDifference from '../parsPath.js';
+import getDifference from '../getDifference.js';
 
 const currentDirectory = cwd();
-const fixturesDirectory = (file) => path.join(currentDirectory, 'bin', '__fixtures__', file);
+const fileFromFixtures = (file) => path.join(currentDirectory, file);
 
-test('getDifference', () => {
-  expect(getDifference(fixturesDirectory('file1.json'), fixturesDirectory('file2.json'))).toEqual(shouldBe);
+test('JSON', () => {
+  console.log(fileFromFixtures('file1.json'))
+  expect(getDifference(fileFromFixtures('file1.json'), fileFromFixtures('file2.json'))).toEqual(shouldBe);
 });
+
+test('YAML', () => {
+  console.log(fileFromFixtures('file1YAML.yaml'))
+  expect(getDifference(fileFromFixtures('file1YAML.yaml'), fileFromFixtures('file2YAML.yml'))).toEqual(shouldBe);
+})

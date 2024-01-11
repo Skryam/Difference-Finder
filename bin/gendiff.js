@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import getDifference from './parsPath.js';
+import getDifference from './getDifference.js';
 
 program
   .version('1.0.0', '-V, --version', 'output the version number')

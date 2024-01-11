@@ -1,19 +1,4 @@
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
-
-const fileParse = (filePath) => {
-  if (path.extname(filePath) === '.json') {
-    const parsedFile = JSON.parse(readFileSync(filePath, 'utf-8'));
-    const keys = Object.keys(parsedFile);
-    const sortedKeys = keys.sort();
-    const sortedObject = {};
-    sortedKeys.forEach((key) => {
-      sortedObject[key] = parsedFile[key];
-    });
-    return sortedObject;
-  }
-  return filePath;
-};
+import fileParse from './fileParse.js';
 
 const getDifference = (file1, file2) => {
   let result = '';
@@ -23,7 +8,7 @@ const getDifference = (file1, file2) => {
 
   entri.forEach(([key, value]) => {
     // В случае если одинаковые названия ключей
-    if (Object.hasOwn(parsedFile2, key)) {
+    if (parsedFile2.hasOwnProperty(key)) {
       // Если данные по одинаковым ключам также идентичны
       if (parsedFile1[key] === parsedFile2[key]) {
         result = `${result}\n    ${key}: ${value}`;
@@ -40,7 +25,7 @@ const getDifference = (file1, file2) => {
   // Добавляем ключи второго объекта в строку
   const entri2 = Object.entries(parsedFile2);
   entri2.forEach(([key, value]) => {
-    if (!Object.hasOwn(parsedFile1, key)) {
+    if (!parsedFile1.hasOwnProperty(key)) {
       result = `${result}\n  + ${key}: ${value}`;
     }
   });
