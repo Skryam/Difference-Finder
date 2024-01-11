@@ -14,7 +14,7 @@ const sortKeys = (parsedObject) => {
 
 const fileParse = (filePath) => {
   if (path.extname(filePath) === '.yaml' || '.yml') {
-  return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')))
+    return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')))
   }
   return sortKeys(JSON.parse(readFileSync(filePath, 'utf-8')));
   };
