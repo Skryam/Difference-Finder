@@ -24,11 +24,11 @@ const getDiffObject = (file1, file2) => {
           } // Если оба объекты с одинак ключом
           else if (_.isObject(currentValue1[key]) && _.isObject(currentValue2[key])) {
              result[key] = { case: 'sameKeysObjects', value: iter(currentValue1[key], currentValue2[key], depth + 2) };
-          }
+          } // Если ключи одинаковые, но один объект, а другой нет
         else if (_.isObject(currentValue1[key]) && !_.isObject(currentValue2[key])) {
-           result[key] = [iter(currentValue1[key], currentValue1[key], depth + 2), currentValue2[key]];
+           result[key] = { case: 'firstObjSecondNot', value: [iter(currentValue1[key], currentValue1[key], depth + 2), currentValue2[key]] };
         } else {
-           result[key] = [iter(currentValue2[key], currentValue2[key], depth + 2), currentValue1[key]];
+           result[key] = { case: 'SecondObjFirstNot', value: [iter(currentValue2[key], currentValue2[key], depth + 2), currentValue1[key]] };
         }
       } // Уникальные из первого 
       else if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
@@ -45,7 +45,6 @@ const getDiffObject = (file1, file2) => {
     })
     return result;
   };
-  console.log(JSON.stringify(iter(parsedFile1, parsedFile2, 1), null, 2))
   return iter(parsedFile1, parsedFile2, 1);
 }
 
