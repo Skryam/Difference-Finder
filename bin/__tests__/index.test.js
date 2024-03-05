@@ -1,14 +1,15 @@
 import path from 'node:path';
 import { cwd } from 'node:process';
-import shouldBe from '../__fixtures__/expectedfile';
+import { shouldBe, shouldBePlain } from '../__fixtures__/shouldBe.js';
 import getDiffObject from '../indexDiff.js';
 import stylishFormat from '../formatters/stylish.js';
+import plainFormat from '../formatters/plain.js';
 
 const currentDirectory = cwd();
 const fileFromFixtures = (file) => path.join(currentDirectory, 'bin', '__fixtures__', file);
 
 test('JSON', () => {
-  expect(stylishFormat(getDiffObject(fileFromFixtures('deepJSON1.json'), fileFromFixtures('deepJSON2.json')))).toEqual(shouldBe);
+  expect(plainFormat(getDiffObject(fileFromFixtures('deepJSON1.json'), fileFromFixtures('deepJSON2.json')))).toEqual(shouldBePlain);
 });
 
 /*test('YAML', () => {
