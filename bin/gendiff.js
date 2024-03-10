@@ -8,11 +8,12 @@ program
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format <type>', 'output format')
-    program.action((filepath1, filepath2, options) => {
-      const format = options.format || 'stylish';
-      const base = getDiffObject(filepath1, filepath2);
-      const formatted = getFormatter(base, format);
-console.log(formatted)
+  .action((filepath1, filepath2, options) => {
+    const base = getDiffObject(filepath1, filepath2);
+    const formatName = options.format || 'stylish';
+    console.log(formatName)
+    const formatter = getFormatter(base, formatName);
+    console.log(JSON.stringify(base, null, 2));
   });
 
 program.parse(process.argv);

@@ -2,7 +2,6 @@ import getDifference from '../indexDiff.js';
 import _ from 'lodash';
 
 const stylishFormat = (diffObject) => {
-  console.log(diffObject.common)
 
   const iter = (obj, depth) => {
     const keys = Object.keys(obj);
@@ -47,8 +46,6 @@ const stylishFormat = (diffObject) => {
       `${bracketIndent}}`,
     ].join('\n');
   };
-
-  console.log(iter(diffObject, 1));
   return iter(diffObject, 1);
 }
 
