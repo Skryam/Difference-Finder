@@ -1,4 +1,4 @@
-const stylishFormat = (diffObject) => {
+const jsonFormat = (diffObject) => {
 
   const iter = (obj, depth) => {
     const keys = Object.keys(obj);

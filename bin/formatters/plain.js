@@ -1,6 +1,3 @@
-import getDifference from '../indexDiff.js';
-import _ from 'lodash';
-
 const plainFormat = (diffObject) => {
   const forStr = (val) => typeof val === 'string' ? `'${val}'` : val;
 
