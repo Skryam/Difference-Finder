@@ -11,9 +11,8 @@ program
   .action((filepath1, filepath2, options) => {
     const base = getDiffObject(filepath1, filepath2);
     const formatName = options.format || 'stylish';
-    console.log(formatName)
     const formatter = getFormatter(base, formatName);
-    console.log(JSON.stringify(base, null, 2));
+    console.log(formatter);
   });
 
 program.parse(process.argv);

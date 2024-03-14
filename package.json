@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Skryam/Project_2#readme",
   "type": "module",
   "dependencies": {
+    "asciinema-player": "^3.7.0",
     "commander": "^11.1.0",
     "lodash": "^4.17.21"
   },
