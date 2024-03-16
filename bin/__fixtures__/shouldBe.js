@@ -1,4 +1,4 @@
-const shouldBe = `{
+const shouldBeStylish = `{
     common: {
       + follow: false
         setting1: Value 1
@@ -189,4 +189,4 @@ const shouldBeJSON = `{
   }
 }`
 
-export { shouldBe, shouldBePlain, shouldBeJSON };
+export { shouldBeStylish, shouldBePlain, shouldBeJSON };
