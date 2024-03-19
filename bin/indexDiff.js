@@ -30,17 +30,26 @@ const getDiffObject = (file1, file2) => {
         } else {
            result[key] = { case: 'SecondObjFirstNot', value: [iter(currentValue2[key], currentValue2[key], depth + 2), currentValue1[key]] };
         }
-      } // Уникальные из первого 
-      else if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
-        if (!_.isObject(currentValue1[key])) {
-           result[key] = { 'case': 'deleted', 'value':currentValue1[key] };
-        } else result[key] = { 'case': 'deletedObject', 'value': iter(currentValue1[key], currentValue1[key], depth + 2) };
       }
-       // Уникальные из второго
-      else {
+      else if (Object.hasOwn(currentValue1, key)) {
+        if (!Object.hasOwn(currentValue2, key)) {
+          result[key] = {
+            'case': _.isObject(currentValue1[key]) ? 'deletedObject' : 'deleted',
+            'value': _.isObject(currentValue1[key]) ? iter(currentValue1[key], currentValue1[key], depth + 2) : currentValue1[key]
+          };
+        }
+      } else {
         if (!_.isObject(currentValue2[key])) {
-           result[key] = { 'case': 'added', 'value':currentValue2[key] };
-        } else  result[key] = { 'case': 'addedObject', 'value': iter(currentValue2[key], currentValue2[key], depth + 2) };
+          result[key] = {
+            'case': 'added',
+            'value': currentValue2[key]
+          };
+        } else {
+          result[key] = {
+            'case': 'addedObject',
+            'value': iter(currentValue2[key], currentValue2[key], depth + 2)
+          };
+        }
       }
     })
     return result;
