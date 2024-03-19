@@ -10,17 +10,13 @@ import jsonFormat from '../formatters/json.js';
 const currentDirectory = cwd();
 const fileFromFixtures = (file) => path.join(currentDirectory, 'bin', '__fixtures__', file);
 
-test('toFormatStylish', () => {
-  expect(stylishFormat(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')))).toEqual(shouldBeStylish);
-  expect(stylishFormat(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')))).toEqual(shouldBeStylish);
-});
+const testFormat = (formatFunction, expectedFormat) => {
+  expect(formatFunction(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')))).toEqual(expectedFormat);
+  expect(formatFunction(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')))).toEqual(expectedFormat);
+}
 
-test('toFormatJSON', () => {
-  expect(jsonFormat(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')))).toEqual(shouldBeJSON);
-  expect(jsonFormat(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')))).toEqual(shouldBeJSON);
-});
+test('toFormatStylish', () => testFormat(stylishFormat, shouldBeStylish));
 
-test('toFormatPlain', () => {
-  expect(plainFormat(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')))).toEqual(shouldBePlain);
-  expect(plainFormat(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')))).toEqual(shouldBePlain);
-})
+test('toFormatJSON', () => testFormat(jsonFormat, shouldBeJSON));
+
+test('toFormatPlain', () => testFormat(plainFormat, shouldBePlain));
