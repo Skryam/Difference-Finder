@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import getDiffObject from './indexDiff.js';
-import getFormatter from './formatters/index.js';
+import getDiffObject from '../src/indexDiff.js';
+import getFormatter from '../src/formatters/index.js';
 
 program
   .version('1.0.0', '-V, --version', 'output the version number')
