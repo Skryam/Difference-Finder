@@ -17,30 +17,23 @@ const getDiffObject = (file1, file2) => {
           // Если равны по значениям
             if (currentValue1[key] === currentValue2[key]) {
                result[key] = { case: 'equal', value: currentValue1[key] };
-            } // Если же данные разные
-            else {
-               result[key] = { case: 'sameKeyDiffValue', value: [currentValue1[key], currentValue2[key]] };
-            }
-          } // Если оба объекты с одинак ключом
+            } else {
+              result[key] = { case: 'updated', value: [currentValue1[key], currentValue2[key]] };
+           }
+          } // Если оба объекты
           else if (_.isObject(currentValue1[key]) && _.isObject(currentValue2[key])) {
-             result[key] = { case: 'sameKeysObjects', value: iter(currentValue1[key], currentValue2[key], depth + 2) };
-          } // Если ключи одинаковые, но один объект, а другой нет
-        else if (_.isObject(currentValue1[key]) && !_.isObject(currentValue2[key])) {
-           result[key] = { case: 'firstObjSecondNot', value: [iter(currentValue1[key], currentValue1[key], depth + 2), currentValue2[key]] };
-        } else {
-           result[key] = { case: 'SecondObjFirstNot', value: [iter(currentValue2[key], currentValue2[key], depth + 2), currentValue1[key]] };
-        }
+             result[key] = { case: 'nested', value: iter(currentValue1[key], currentValue2[key], depth + 2) };
+          } // Если же данные разные
+          else {
+             result[key] = { case: 'updated', value: [currentValue1[key], currentValue2[key]] };
+          }
       } // Уникальные из первого 
       else if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
-        if (!_.isObject(currentValue1[key])) {
-           result[key] = { 'case': 'deleted', 'value':currentValue1[key] };
-        } else result[key] = { 'case': 'deletedObject', 'value': iter(currentValue1[key], currentValue1[key], depth + 2) };
-      }
+           result[key] = { case: 'deleted', value: currentValue1[key] };
+        }
        // Уникальные из второго
       else {
-        if (!_.isObject(currentValue2[key])) {
-           result[key] = { 'case': 'added', 'value':currentValue2[key] };
-        } else  result[key] = { 'case': 'addedObject', 'value': iter(currentValue2[key], currentValue2[key], depth + 2) };
+           result[key] = { case: 'added', value: currentValue2[key] };
       }
     })
     return result;

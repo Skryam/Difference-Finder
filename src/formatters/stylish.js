@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const stylishFormat = (diffObject) => {
 
   const iter = (obj, depth) => {
@@ -5,36 +7,53 @@ const stylishFormat = (diffObject) => {
     const indentSize = 2 * depth;
     const currentSpace = ' '.repeat(indentSize);
     const bracketIndent = ' '.repeat(indentSize - 2);
+
+    const objToString = (getObj) => {
+      const getKeys = Object.keys(getObj);
+      const result = getKeys.map((key) => {
+        const value = getObj[key];
+        if (!_.isObject(value)) {
+          return `${currentSpace}  ${key}: ${value}`;
+        } else return `${currentSpace}  ${key}: ${objToString(value)}`;
+      })
+      return result;
+     }
+     
     const lines = keys.flatMap((key) => {
           if (obj[key].case === 'equal') {
             return `${currentSpace}  ${key}: ${obj[key].value}`;
-          } // Если же данные разные
-          else if (obj[key].case === 'sameKeyDiffValue') {
-            return [`${currentSpace}- ${key}: ${obj[key].value[0]}`, `${currentSpace}+ ${key}: ${obj[key].value[1]}`];
           }
-          else if (obj[key].case === 'firstObjSecondNot') {
-            return [`${currentSpace}- ${key}: ${iter(obj[key].value[0], depth + 2)}`, `${currentSpace}+ ${key}: ${obj[key].value[1]}`]
+           // Если же данные разные
+          else if (obj[key].case === 'updated') {
+            const value1 = obj[key].value[0];
+            const value2 = obj[key].value[1];
+            if (!_.isObject(value1) && !_.isObject(value2)) {
+            return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${value2}`];
+            }
+            else if (_.isObject(value1) && !_.isObject(value2)) {
+              return [`${currentSpace}- ${key}: ${iter(value1, depth + 2)}`, `${currentSpace}+ ${key}: ${value2}`]
+            }
+            else {
+             return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${iter(value2, depth + 2)}`]
+            }
           }
-          else if (obj[key].case === 'SecondObjFirstNot') {
-            return [`${currentSpace}- ${key}: ${obj[key].value[0]}`, `${currentSpace}+ ${key}: ${iter(obj[key].value[1], depth + 2)}`]
-          }
-        else if (obj[key].case === 'sameKeysObjects') {
+
+        else if (obj[key].case === 'nested') {
           return `${currentSpace}  ${key}: ${iter(obj[key].value, depth + 2)}`;
         }
-         // Уникальные из первого 
-      else if (obj[key].case === 'deleted') {
+
+         // Уникальные из первого
+        else if (obj[key].case === 'deleted') {
+          if (!_.isObject(obj[key].value)) {
           return `${currentSpace}- ${key}: ${obj[key].value}`;
+          } else return `${currentSpace}- ${key}: ${objToString(obj[key].value)}`;
         }
-      else if (obj[key].case === 'deletedObject') {
-        return `${currentSpace}- ${key}: ${iter(obj[key].value, depth + 2)}`;
-      }
        // Уникальные из второго
        else if (obj[key].case === 'added') {
+        if (!_.isObject(obj[key].value)) {
         return `${currentSpace}+ ${key}: ${obj[key].value}`;
+        } else return `${currentSpace}+ ${key}: ${objToString(obj[key].value)}`;
       }
-    else if (obj[key].case === 'addedObject') {
-      return `${currentSpace}+ ${key}: ${iter(obj[key].value, depth + 2)}`;
-    }
     })
 
     return [
