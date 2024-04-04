@@ -1,5 +1,23 @@
 import _ from 'lodash';
 
+const objToString = (getObj, depth) => {
+  console.log(depth)
+  const space = ' '.repeat(2 * depth);
+  const getKeys = Object.keys(getObj);
+  const bracketIndent = ' '.repeat((2 * depth) - 2);
+  const result = getKeys.map((key) => {
+    const value = getObj[key];
+    if (!_.isObject(value)) {
+      return `${space}  ${key}: ${value}`;
+    } else return `${space}  ${key}: ${objToString(value, depth + 2)}`;
+  })
+  return [
+    '{',
+    ...result,
+    `${bracketIndent}}`,
+  ].join('\n');
+ }
+
 const stylishFormat = (diffObject) => {
 
   const iter = (obj, depth) => {
@@ -7,17 +25,6 @@ const stylishFormat = (diffObject) => {
     const indentSize = 2 * depth;
     const currentSpace = ' '.repeat(indentSize);
     const bracketIndent = ' '.repeat(indentSize - 2);
-
-    const objToString = (getObj) => {
-      const getKeys = Object.keys(getObj);
-      const result = getKeys.map((key) => {
-        const value = getObj[key];
-        if (!_.isObject(value)) {
-          return `${currentSpace}  ${key}: ${value}`;
-        } else return `${currentSpace}  ${key}: ${objToString(value)}`;
-      })
-      return result;
-     }
      
     const lines = keys.flatMap((key) => {
           if (obj[key].case === 'equal') {
@@ -31,10 +38,10 @@ const stylishFormat = (diffObject) => {
             return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${value2}`];
             }
             else if (_.isObject(value1) && !_.isObject(value2)) {
-              return [`${currentSpace}- ${key}: ${iter(value1, depth + 2)}`, `${currentSpace}+ ${key}: ${value2}`]
+              return [`${currentSpace}- ${key}: ${objToString(value1, depth + 2)}`, `${currentSpace}+ ${key}: ${value2}`]
             }
             else {
-             return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${iter(value2, depth + 2)}`]
+             return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${objToString(value2, depth + 2)}`]
             }
           }
 
@@ -46,13 +53,13 @@ const stylishFormat = (diffObject) => {
         else if (obj[key].case === 'deleted') {
           if (!_.isObject(obj[key].value)) {
           return `${currentSpace}- ${key}: ${obj[key].value}`;
-          } else return `${currentSpace}- ${key}: ${objToString(obj[key].value)}`;
+          } else return `${currentSpace}- ${key}: ${objToString(obj[key].value, depth + 2)}`;
         }
        // Уникальные из второго
        else if (obj[key].case === 'added') {
         if (!_.isObject(obj[key].value)) {
         return `${currentSpace}+ ${key}: ${obj[key].value}`;
-        } else return `${currentSpace}+ ${key}: ${objToString(obj[key].value)}`;
+        } else return `${currentSpace}+ ${key}: ${objToString(obj[key].value, depth + 2)}`;
       }
     })
 
