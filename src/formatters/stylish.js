@@ -18,7 +18,6 @@ const objToString = (getObj, depth) => {
 };
 
 const stylishFormat = (diffObject) => {
-  console.log(diffObject.common);
   const iter = (obj, depth) => {
     const keys = Object.keys(obj);
     const indentSize = 2 * depth;
@@ -59,6 +58,7 @@ const stylishFormat = (diffObject) => {
           return `${currentSpace}+ ${key}: ${obj[key].value}`;
         } return `${currentSpace}+ ${key}: ${objToString(obj[key].value, depth + 2)}`;
       }
+      return lines;
     });
 
     return [

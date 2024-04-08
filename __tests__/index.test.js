@@ -9,7 +9,6 @@ const fileFromFixtures = (file) => path.join(currentDirectory, '__fixtures__', f
 
 const testFormat = (formatName, expectedFormat) => {
   const popa = getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json'))
-  console.log(JSON.stringify(popa, null, 2))
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')), formatName)).toEqual(expectedFormat);
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')), formatName)).toEqual(expectedFormat);
 }

@@ -4,19 +4,23 @@ import yaml from 'js-yaml';
 
 const sortKeys = (parsedObject) => {
   const keys = Object.keys(parsedObject);
-  const sortedKeys = keys.sort();
-   const sortedObject = {};
-   sortedKeys.forEach((key) => {
-     sortedObject[key] = parsedObject[key];
+  const sortedObject = {};
+  keys.forEach((key) => {
+    sortedObject[key] = parsedObject[key];
   });
-   return sortedObject;
-}
+  return sortedObject;
+};
 
 const fileParse = (filePath) => {
-  if (path.extname(filePath) === '.yaml' || '.yml') {
-    return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')))
+  switch (path.extname(filePath)) {
+    case '.yaml':
+    case '.yml':
+    return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')));
+    case '.json':
+    return sortKeys(JSON.parse(readFileSync(filePath, 'utf-8')));
+    default:
+    throw new Error(`Only js, json and yaml: ${path.extname(filePath)}`);
   }
-  return sortKeys(JSON.parse(readFileSync(filePath, 'utf-8')));
-  };
+};
 
-  export default fileParse;
+export default fileParse;
