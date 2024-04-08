@@ -3,18 +3,20 @@ const plainFormat = (diffObject) => {
 
   const iter = (obj, prevKey) => {
     const keys = Object.keys(obj);
+
     const lines = keys.flatMap((key) => {
       if (obj[key].case === 'equal') {
         return [];
       }
       const forPrev = () => prevKey === undefined ? `${key}` : `${prevKey}.${key}`;
+
            if (obj[key].case === 'sameKeyDiffValue') {
             return `Property '${prevKey}.${key}' was updated. From ${forStr(obj[key].value[0])} to ${forStr(obj[key].value[1])}`;
           }
           else if (obj[key].case === 'firstObjSecondNot') {
             return `Property '${prevKey}.${key}' was updated. From [complex value] to ${forStr(obj[key].value[1])}`;
           }
-        else if (obj[key].case === 'sameKeysObjects') {
+        else if (obj[key].case === 'nested') {
           return iter(obj[key].value, forPrev());
         }
          // Уникальные из первого 

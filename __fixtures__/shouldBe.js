@@ -57,7 +57,7 @@ Property 'group3' was added with value: [complex value]`
 
 const shouldBeJSON = `{
   "common": {
-    "case": "sameKeysObjects",
+    "case": "nested",
     "value": {
       "follow": {
         "case": "added",
@@ -72,37 +72,30 @@ const shouldBeJSON = `{
         "value": 200
       },
       "setting3": {
-        "case": "sameKeyDiffValue",
-        "value": [
-          true,
-          null
-        ]
+        "case": "updated",
+        "previousValue": true,
+        "newValue": null
       },
       "setting4": {
         "case": "added",
         "value": "blah blah"
       },
       "setting5": {
-        "case": "addedObject",
+        "case": "added",
         "value": {
-          "key5": {
-            "case": "equal",
-            "value": "value5"
-          }
+          "key5": "value5"
         }
       },
       "setting6": {
-        "case": "sameKeysObjects",
+        "case": "nested",
         "value": {
           "doge": {
-            "case": "sameKeysObjects",
+            "case": "nested",
             "value": {
               "wow": {
-                "case": "sameKeyDiffValue",
-                "value": [
-                  "",
-                  "so much"
-                ]
+                "case": "updated",
+                "previousValue": "",
+                "newValue": "so much"
               }
             }
           },
@@ -119,72 +112,44 @@ const shouldBeJSON = `{
     }
   },
   "group1": {
-    "case": "sameKeysObjects",
+    "case": "nested",
     "value": {
       "baz": {
-        "case": "sameKeyDiffValue",
-        "value": [
-          "bas",
-          "bars"
-        ]
+        "case": "updated",
+        "previousValue": "bas",
+        "newValue": "bars"
       },
       "foo": {
         "case": "equal",
         "value": "bar"
       },
       "nest": {
-        "case": "firstObjSecondNot",
-        "value": [
-          {
-            "key": {
-              "case": "equal",
-              "value": "value"
-            }
-          },
-          "str"
-        ]
+        "case": "updated",
+        "previousValue": {
+          "key": "value"
+        },
+        "newValue": "str"
       }
     }
   },
   "group2": {
-    "case": "deletedObject",
+    "case": "deleted",
     "value": {
-      "abc": {
-        "case": "equal",
-        "value": 12345
-      },
+      "abc": 12345,
       "deep": {
-        "case": "sameKeysObjects",
-        "value": {
-          "id": {
-            "case": "equal",
-            "value": 45
-          }
-        }
+        "id": 45
       }
     }
   },
   "group3": {
-    "case": "addedObject",
+    "case": "added",
     "value": {
       "deep": {
-        "case": "sameKeysObjects",
-        "value": {
-          "id": {
-            "case": "sameKeysObjects",
-            "value": {
-              "number": {
-                "case": "equal",
-                "value": 45
-              }
-            }
-          }
+        "id": {
+          "number": 45
         }
       },
-      "fee": {
-        "case": "equal",
-        "value": 100500
-      }
+      "fee": 100500
     }
   }
 }`

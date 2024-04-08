@@ -8,13 +8,12 @@ const currentDirectory = cwd();
 const fileFromFixtures = (file) => path.join(currentDirectory, '__fixtures__', file);
 
 const testFormat = (formatName, expectedFormat) => {
-  const popa = getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json'))
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')), formatName)).toEqual(expectedFormat);
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')), formatName)).toEqual(expectedFormat);
 }
 
 test('toFormatStylish', () => testFormat('stylish', shouldBeStylish));
 
-//test('toFormatJSON', () => testFormat('json', shouldBeJSON));
+test('toFormatJSON', () => testFormat('json', shouldBeJSON));
 
-//test('toFormatPlain', () => testFormat('plain', shouldBePlain));
+test('toFormatPlain', () => testFormat('plain', shouldBePlain));
