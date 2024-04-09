@@ -10,7 +10,7 @@ const fileFromFixtures = (file) => path.join(currentDirectory, '__fixtures__', f
 const testFormat = (formatName, expectedFormat) => {
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.json'), fileFromFixtures('deep2.json')), formatName)).toEqual(expectedFormat);
   expect(getFormatter(getDiffObject(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml')), formatName)).toEqual(expectedFormat);
-}
+};
 
 test('toFormatStylish', () => testFormat('stylish', shouldBeStylish));
 

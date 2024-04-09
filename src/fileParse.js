@@ -15,11 +15,11 @@ const fileParse = (filePath) => {
   switch (path.extname(filePath)) {
     case '.yaml':
     case '.yml':
-    return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')));
+      return sortKeys(yaml.load(readFileSync(filePath, 'utf-8')));
     case '.json':
-    return sortKeys(JSON.parse(readFileSync(filePath, 'utf-8')));
+      return sortKeys(JSON.parse(readFileSync(filePath, 'utf-8')));
     default:
-    throw new Error(`Only js, json and yaml: ${path.extname(filePath)}`);
+      throw new Error(`Only js, json and yaml: ${path.extname(filePath)}`);
   }
 };
 

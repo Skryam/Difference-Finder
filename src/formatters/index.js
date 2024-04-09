@@ -12,6 +12,6 @@ const getFormatter = (diffObject, formatName) => {
     default:
       throw new Error(`Unknown format: ${formatName}`);
   }
-}
+};
 
 export default getFormatter;
