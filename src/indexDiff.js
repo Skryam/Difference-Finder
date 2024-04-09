@@ -27,7 +27,6 @@ const getDiffObject = (file1, file2) => {
       } else {
         result[key] = { case: 'equal', value: currentValue1[key] };
       }
-      throw new Error(`Inappropriate value: ${key}`);
     });
     return result;
   };
