@@ -30,16 +30,15 @@ const stylishFormat = (diffObject) => {
       }
       // Если же данные разные
       if (obj[key].case === 'updated') {
-        const value1 = obj[key].previousValue;
-        const value2 = obj[key].newValue;
-        if (!_.isObject(value1) && !_.isObject(value2)) {
-          return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${value2}`];
+        const { previousValue, newValue } = obj[key];
+        if (!_.isObject(previousValue) && !_.isObject(value2)) {
+          return [`${currentSpace}- ${key}: ${previousValue}`, `${currentSpace}+ ${key}: ${value2}`];
         }
-        if (_.isObject(value1) && !_.isObject(value2)) {
-          return [`${currentSpace}- ${key}: ${objToString(value1, depth + 2)}`, `${currentSpace}+ ${key}: ${value2}`];
+        if (_.isObject(previousValue) && !_.isObject(value2)) {
+          return [`${currentSpace}- ${key}: ${objToString(previousValue, depth + 2)}`, `${currentSpace}+ ${key}: ${value2}`];
         }
 
-        return [`${currentSpace}- ${key}: ${value1}`, `${currentSpace}+ ${key}: ${objToString(value2, depth + 2)}`];
+        return [`${currentSpace}- ${key}: ${previousValue}`, `${currentSpace}+ ${key}: ${objToString(value2, depth + 2)}`];
       }
 
       if (obj[key].case === 'nested') {
@@ -58,7 +57,7 @@ const stylishFormat = (diffObject) => {
           return `${currentSpace}+ ${key}: ${obj[key].value}`;
         } return `${currentSpace}+ ${key}: ${objToString(obj[key].value, depth + 2)}`;
       }
-      return lines;
+      throw new Error('error');
     });
 
     return [
