@@ -1,8 +1,12 @@
 import _ from 'lodash';
 
-const plainFormat = (diffObject) => {
-  const forStr = (val) => (typeof val === 'string' ? `'${val}'` : val);
+const objToString = (getObj) => {
+  if (_.isObject(getObj)) {
+    return '[complex value]';
+  } return typeof getObj === 'string' ? `'${getObj}'` : getObj;
+};
 
+const plainFormat = (diffObject) => {
   const iter = (obj, prevKey) => {
     const keys = Object.keys(obj);
 
@@ -10,29 +14,25 @@ const plainFormat = (diffObject) => {
       if (obj[key].case === 'equal') {
         return [];
       }
-      const forPrev = () => (prevKey === undefined ? `${key}` : `${prevKey}.${key}`);
+      const forPrev = (!prevKey) ? `${key}` : `${prevKey}.${key}`;
 
       if (obj[key].case === 'updated') {
-        if (!_.isObject(obj[key].previousValue) && !_.isObject(obj[key].newValue)) {
-          return `Property '${prevKey}.${key}' was updated. From ${forStr(obj[key].previousValue)} to ${forStr(obj[key].newValue)}`;
-        } return `Property '${prevKey}.${key}' was updated. From [complex value] to ${forStr(obj[key].newValue)}`;
+        const { previousValue, newValue } = obj[key];
+        return `Property '${forPrev}' was updated. From ${objToString(previousValue)} to ${objToString(newValue)}`;
       }
+
       if (obj[key].case === 'nested') {
-        return iter(obj[key].value, forPrev());
+        return iter(obj[key].value, forPrev);
       }
 
       // Уникальные из первого
       if (obj[key].case === 'deleted') {
-        if (!_.isObject(obj[key].value)) {
-          return `Property '${prevKey}.${key}' was removed`;
-        } return `Property '${key}' was removed`;
+        return `Property '${forPrev}' was removed`;
       }
 
       // Уникальные из второго
       if (obj[key].case === 'added') {
-        if (!_.isObject(obj[key].value)) {
-          return `Property '${prevKey}.${key}' was added with value: ${forStr(obj[key].value)}`;
-        } return `Property '${forPrev()}' was added with value: [complex value]`;
+        return `Property '${forPrev}' was added with value: ${objToString(obj[key].value)}`;
       }
       throw new Error(`Incorrect case: ${obj[key].case}`);
     });

@@ -10,9 +10,9 @@ const getDiffObject = (file1, file2) => {
     const uniqueKeys = objectsKeys
       .filter((item, index) => objectsKeys.indexOf(item) === index)
       .sort();
-    uniqueKeys.reduce((acc, key), acc = {} => {
-      // Если оба объекты
+    return uniqueKeys.reduce((acc, key) => {
       if (_.isObject(currentValue1[key]) && _.isObject(currentValue2[key])) {
+        // Если оба объекты
         return {
           ...acc,
           [key]: {
@@ -20,20 +20,46 @@ const getDiffObject = (file1, file2) => {
             value: iter(currentValue1[key], currentValue2[key], depth + 2),
           },
         };
-      } if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
-        // Уникальные из первого
-        result[key] = { case: 'deleted', value: currentValue1[key] };
-      } else if (!Object.hasOwn(currentValue1, key) && Object.hasOwn(currentValue2, key)) {
-        // Уникальные из второго
-        result[key] = { case: 'added', value: currentValue2[key] };
-      } else if (currentValue1[key] !== currentValue2[key]) {
-        // Если же данные разные
-        result[key] = { case: 'updated', previousValue: currentValue1[key], newValue: currentValue2[key] };
-      } else {
-        result[key] = { case: 'equal', value: currentValue1[key] };
       }
-      return result;
-    });
+      if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
+        // Уникальные из первого
+        return {
+          ...acc,
+          [key]: {
+            case: 'deleted',
+            value: currentValue1[key],
+          },
+        };
+      }
+      if (!Object.hasOwn(currentValue1, key) && Object.hasOwn(currentValue2, key)) {
+        // Уникальные из второго
+        return {
+          ...acc,
+          [key]: {
+            case: 'added',
+            value: currentValue2[key],
+          },
+        };
+      }
+      if (currentValue1[key] !== currentValue2[key]) {
+        // Если же данные разные
+        return {
+          ...acc,
+          [key]: {
+            case: 'updated',
+            previousValue: currentValue1[key],
+            newValue: currentValue2[key],
+          },
+        };
+      }
+      return {
+        ...acc,
+        [key]: {
+          case: 'equal',
+          value: currentValue1[key],
+        },
+      };
+    }, {});
   };
   return iter(parsedFile1, parsedFile2, 1);
 };
