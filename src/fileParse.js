@@ -10,7 +10,7 @@ const fileParse = (filePath) => {
     case '.json':
       return (JSON.parse(readFileSync(filePath, 'utf-8')));
     default:
-      throw new Error(`edOnly json and yam, Provided: ${path.extname(filePath)}`);
+      throw new Error(`Read Only json and yaml, Provided: ${path.extname(filePath)}`);
   }
 };
 

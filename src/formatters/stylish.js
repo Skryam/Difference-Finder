@@ -11,9 +11,7 @@ const objToString = (getObj, depth) => {
   const bracketIndent = space.repeat((2 * depth) - 2);
   const result = getKeys.map((key) => {
     const value = getObj[key];
-    if (!_.isObject(value)) {
-      return `${indentSize}  ${key}: ${value}`;
-    } return `${indentSize}  ${key}: ${objToString(value, depth + 2)}`;
+    return `${indentSize}  ${key}: ${objToString(value, depth + 2)}`;
   });
   return [
     '{',
@@ -44,10 +42,14 @@ const stylishFormat = (diffObject) => {
       }
 
       // Уникальные из первого
-      if (obj[key].case === 'deleted') return `${currentSpace}- ${key}: ${objToString(obj[key].value, depth + 2)}`;
+      if (obj[key].case === 'deleted') {
+        return `${currentSpace}- ${key}: ${objToString(obj[key].value, depth + 2)}`;
+      }
 
       // Уникальные из второго
-      if (obj[key].case === 'added') return `${currentSpace}+ ${key}: ${objToString(obj[key].value, depth + 2)}`;
+      if (obj[key].case === 'added') {
+        return `${currentSpace}+ ${key}: ${objToString(obj[key].value, depth + 2)}`;
+      }
 
       throw new Error(`Received wrong case: ${obj[key].case}`);
     });

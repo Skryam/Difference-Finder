@@ -7,11 +7,10 @@ program
   .version('1.0.0', '-V, --version', 'output the version number')
   .arguments('<filepath1> <filepath2>')
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format <type>', 'output format')
+  .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
     const base = getDiffObject(filepath1, filepath2);
-    const formatName = options.format || 'stylish';
-    const formatter = getFormatter(base, formatName);
+    const formatter = getFormatter(base, options.format);
     console.log(formatter);
   });
 

@@ -14,6 +14,6 @@ const testFormat = (formatName, expectedFormat) => {
 
 test('toFormatStylish', () => testFormat('stylish', shouldBeStylish));
 
-//test('toFormatJSON', () => testFormat('json', shouldBeJSON));
+test('toFormatJSON', () => testFormat('json', shouldBeJSON));
 
 test('toFormatPlain', () => testFormat('plain', shouldBePlain));

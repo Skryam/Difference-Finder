@@ -21,6 +21,7 @@ const getDiffObject = (file1, file2) => {
           },
         };
       }
+
       if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
         // Уникальные из первого
         return {
@@ -31,6 +32,7 @@ const getDiffObject = (file1, file2) => {
           },
         };
       }
+
       if (!Object.hasOwn(currentValue1, key) && Object.hasOwn(currentValue2, key)) {
         // Уникальные из второго
         return {
@@ -41,6 +43,7 @@ const getDiffObject = (file1, file2) => {
           },
         };
       }
+
       if (currentValue1[key] !== currentValue2[key]) {
         // Если же данные разные
         return {
@@ -52,6 +55,7 @@ const getDiffObject = (file1, file2) => {
           },
         };
       }
+
       return {
         ...acc,
         [key]: {
