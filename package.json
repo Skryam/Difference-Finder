@@ -2,6 +2,9 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "main": "gendiff.js",
   "scripts": {
     "test": "jest --coverage"
@@ -18,13 +21,9 @@
   "homepage": "https://github.com/Skryam/Project_2#readme",
   "type": "module",
   "dependencies": {
-    "asciinema-player": "^3.7.0",
     "commander": "^11.1.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
-  },
-  "bin": {
-    "gendiff": "bin/gendiff.js"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import fileParse from './fileParse.js';
 
-const getDiffObject = (file1, file2) => {
-  const parsedFile1 = fileParse(file1);
-  const parsedFile2 = fileParse(file2);
+const buildDiff = (filePath1, filePath2) => {
+  const parsedFile1 = fileParse(filePath1);
+  const parsedFile2 = fileParse(filePath2);
 
   const iter = (currentValue1, currentValue2, depth) => {
     const objectsKeys = [...Object.keys(currentValue1), ...Object.keys(currentValue2)];
-    const uniqueKeys = objectsKeys
+    const uniqueSortedKeys = objectsKeys
       .filter((item, index) => objectsKeys.indexOf(item) === index)
       .sort();
-    return uniqueKeys.reduce((acc, key) => {
+    return uniqueSortedKeys.reduce((acc, key) => {
       if (_.isObject(currentValue1[key]) && _.isObject(currentValue2[key])) {
         // Если оба объекты
         return {
@@ -68,4 +68,4 @@ const getDiffObject = (file1, file2) => {
   return iter(parsedFile1, parsedFile2, 1);
 };
 
-export default getDiffObject;
+export default buildDiff;

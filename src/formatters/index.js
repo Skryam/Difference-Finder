@@ -1,7 +1,7 @@
 import stylishFormat from './stylish.js';
 import plainFormat from './plain.js';
 
-const getFormatter = (diffObject, formatName) => {
+const getFormat = (diffObject, formatName) => {
   switch (formatName) {
     case 'stylish':
       return stylishFormat(diffObject);
@@ -14,4 +14,4 @@ const getFormatter = (diffObject, formatName) => {
   }
 };
 
-export default getFormatter;
+export default getFormat;

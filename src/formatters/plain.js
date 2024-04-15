@@ -1,39 +1,39 @@
 import _ from 'lodash';
 
-const objToString = (getObj) => {
-  if (_.isObject(getObj)) {
+const handleValue = (value) => {
+  if (_.isObject(value)) {
     return '[complex value]';
   }
-  return typeof getObj === 'string' ? `'${getObj}'` : getObj;
+  return typeof value === 'string' ? `'${value}'` : value;
 };
 
-const plainFormat = (diffObject) => {
-  const iter = (obj, prevKey) => {
+const getPlainFormat = (diffObject) => {
+  const iter = (obj, keyPath) => {
     const keys = Object.keys(obj);
 
     const lines = keys.flatMap((key) => {
       if (obj[key].case === 'equal') {
         return [];
       }
-      const forPrev = !prevKey ? `${key}` : `${prevKey}.${key}`;
+      const fullKeyPath = !keyPath ? `${key}` : `${keyPath}.${key}`;
 
       if (obj[key].case === 'updated') {
         const { previousValue, newValue } = obj[key];
-        return `Property '${forPrev}' was updated. From ${objToString(previousValue)} to ${objToString(newValue)}`;
+        return `Property '${fullKeyPath}' was updated. From ${handleValue(previousValue)} to ${handleValue(newValue)}`;
       }
 
       if (obj[key].case === 'nested') {
-        return iter(obj[key].value, forPrev);
+        return iter(obj[key].value, fullKeyPath);
       }
 
       // Уникальные из первого
       if (obj[key].case === 'deleted') {
-        return `Property '${forPrev}' was removed`;
+        return `Property '${fullKeyPath}' was removed`;
       }
 
       // Уникальные из второго
       if (obj[key].case === 'added') {
-        return `Property '${forPrev}' was added with value: ${objToString(obj[key].value)}`;
+        return `Property '${fullKeyPath}' was added with value: ${handleValue(obj[key].value)}`;
       }
 
       throw new Error(`Incorrect case: ${obj[key].case}`);
@@ -45,4 +45,4 @@ const plainFormat = (diffObject) => {
   return iter(diffObject);
 };
 
-export default plainFormat;
+export default getPlainFormat;
