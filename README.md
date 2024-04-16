@@ -6,7 +6,7 @@
 <a href="https://codeclimate.com/github/Skryam/Project_2/maintainability"><img src="https://api.codeclimate.com/v1/badges/81607be88b0d0eedcf2a/maintainability" /></a>
 <a href="https://codeclimate.com/github/Skryam/Project_2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/81607be88b0d0eedcf2a/test_coverage" /></a>
 
-<h2 align="left">Difference Finder is a command-line tool for finding differences between two files in JSON or YAML format.<br>It outputs the differences in three different formats: stylish, plain, and JSON.</h2>
+<h3 align="left">Difference Finder is a command-line tool for finding differences between two files in JSON or YAML format.<br>It outputs the differences in three different formats: stylish, plain, and JSON.</h3>
 </head>
 <body>
  <h2 aling="left">Requirements</h2>
