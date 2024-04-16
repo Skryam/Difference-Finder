@@ -10,8 +10,11 @@ const jsonFilesFormat = (format) => gendiff(fileFromFixtures('deep1.json'), file
 const yamlFilesFormat = (format) => gendiff(fileFromFixtures('deep1.yaml'), fileFromFixtures('deep2.yml'), format);
 
 describe('diff', () => {
-  const formats = [{ formatCase: 'stylish', shouldBe: shouldBeStylish }, { formatCase: 'plain', shouldBe: shouldBePlain },
-    { formatCase: 'json', shouldBe: shouldBeJSON }];
+  const formats = [
+    { formatCase: 'stylish', shouldBe: shouldBeStylish },
+    { formatCase: 'plain', shouldBe: shouldBePlain },
+    { formatCase: 'json', shouldBe: shouldBeJSON },
+  ];
 
   it.each(formats)('should return diff in %s format for json files', (format) => {
     expect(jsonFilesFormat(format.formatCase)).toEqual(format.shouldBe);
