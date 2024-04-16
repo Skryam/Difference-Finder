@@ -12,7 +12,6 @@ const buildDiff = (filePath1, filePath2) => {
       .sort();
     return uniqueSortedKeys.reduce((acc, key) => {
       if (_.isObject(currentValue1[key]) && _.isObject(currentValue2[key])) {
-        // Если оба объекты
         return {
           ...acc,
           [key]: {
@@ -23,7 +22,6 @@ const buildDiff = (filePath1, filePath2) => {
       }
 
       if (Object.hasOwn(currentValue1, key) && !Object.hasOwn(currentValue2, key)) {
-        // Уникальные из первого
         return {
           ...acc,
           [key]: {
@@ -34,7 +32,6 @@ const buildDiff = (filePath1, filePath2) => {
       }
 
       if (!Object.hasOwn(currentValue1, key) && Object.hasOwn(currentValue2, key)) {
-        // Уникальные из второго
         return {
           ...acc,
           [key]: {
@@ -45,7 +42,6 @@ const buildDiff = (filePath1, filePath2) => {
       }
 
       if (currentValue1[key] !== currentValue2[key]) {
-        // Если же данные разные
         return {
           ...acc,
           [key]: {

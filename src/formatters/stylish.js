@@ -31,7 +31,7 @@ const getStylishFormat = (diffObject) => {
       if (obj[key].case === 'equal') {
         return `${currentSpace}  ${key}: ${obj[key].value}`;
       }
-      // Если же данные разные
+
       if (obj[key].case === 'updated') {
         const { previousValue, newValue } = obj[key];
         return [`${currentSpace}- ${key}: ${handleValue(previousValue, depth + 2)}`, `${currentSpace}+ ${key}: ${handleValue(newValue, depth + 2)}`];
@@ -41,12 +41,10 @@ const getStylishFormat = (diffObject) => {
         return `${currentSpace}  ${key}: ${iter(obj[key].value, depth + 2)}`;
       }
 
-      // Уникальные из первого
       if (obj[key].case === 'deleted') {
         return `${currentSpace}- ${key}: ${handleValue(obj[key].value, depth + 2)}`;
       }
 
-      // Уникальные из второго
       if (obj[key].case === 'added') {
         return `${currentSpace}+ ${key}: ${handleValue(obj[key].value, depth + 2)}`;
       }

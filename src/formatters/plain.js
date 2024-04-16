@@ -26,12 +26,10 @@ const getPlainFormat = (diffObject) => {
         return iter(obj[key].value, fullKeyPath);
       }
 
-      // Уникальные из первого
       if (obj[key].case === 'deleted') {
         return `Property '${fullKeyPath}' was removed`;
       }
 
-      // Уникальные из второго
       if (obj[key].case === 'added') {
         return `Property '${fullKeyPath}' was added with value: ${handleValue(obj[key].value)}`;
       }
