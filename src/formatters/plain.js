@@ -34,7 +34,7 @@ const getPlainFormat = (diffObject) => {
         return `Property '${fullKeyPath}' was added with value: ${handleValue(obj[key].value)}`;
       }
 
-      throw new Error(`Incorrect case: ${obj[key].case}`);
+      throw new Error(`Received wrong case: ${obj[key].case}`);
     });
     return [
       ...lines,
