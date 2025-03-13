@@ -2,8 +2,9 @@
 
 <h1 align='center'>Difference Finder</h1>
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/81607be88b0d0eedcf2a/maintainability)](https://codeclimate.com/github/Skryam/Project_2/maintainability)
 [![Tests](https://github.com/Skryam/Project_2/actions/workflows/main.yml/badge.svg)](https://github.com/Skryam/Project_2/actions/workflows/main.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/81607be88b0d0eedcf2a/maintainability)](https://codeclimate.com/github/Skryam/Project_2/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/81607be88b0d0eedcf2a/test_coverage)](https://codeclimate.com/github/Skryam/Project_2/test_coverage)
 
 <h3 align="left">Difference Finder is a command-line tool for finding differences between two files in JSON or YAML format.<br>It outputs the differences in three different formats: stylish, plain, and JSON.</h3>
 </head>
